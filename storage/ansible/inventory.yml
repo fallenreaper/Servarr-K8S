@@ -1,0 +1,9 @@
+pi-storage-nodes:
+  hosts:
+    worker-pi-1:
+  vars:
+    # This is the PW to become sudo, whatever you set it to on your node.
+    ansible_become_password: "foo"
+    # Your user you will log into the server with
+    ansible_user: worker
+    ansible_python_interpreter: /usr/bin/python3

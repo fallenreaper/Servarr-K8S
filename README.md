@@ -26,7 +26,7 @@ I have time to write up this documentation, based on what I need to accomplish. 
 
 ## TODO List
 
-[ ] Write up a how-to for setting up a NAS
+[x] Write up a how-to for setting up a NAS
 [ ] Write up a how-to for running your base operator and media layer
 [ ] Setting up Usenet server.
 [ ] Setup for each \*Arr.

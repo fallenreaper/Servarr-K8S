@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pi-samba-pv
+spec:
+  capacity:
+    storage: 1.4Ti # Match or stay under your external drive capacity
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany # Allows multiple cluster pods to read/write concurrently
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: samba-nas
+  csi:
+    driver: smb.csi.k8s.io
+    volumeHandle: pi-samba-volume-id
+    volumeAttributes:
+      source: "//worker-pi-1/NAS" # Change to your Pi IP and Share name
+    nodeStageSecretRef:
+      name: smb-secret
+      namespace: default
+  mountOptions:
+    - dir_mode=0777
+    - file_mode=0777
+    - uid=1000
+    - gid=1000
+    - noperm
+    - vers=3.0
+    - cache=none
+    - nobr1

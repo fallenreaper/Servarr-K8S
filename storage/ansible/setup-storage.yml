@@ -1,0 +1,58 @@
+- name: Setup Storage Nodes
+  hosts: pi-storage-nodes
+  become: true
+  vars:
+    # This is going to be the user/pass for the Samba Share.
+    samba_user: SAMPLEUSER # Replace
+    samba_password: SAMPLEPASSWORD # Replace
+    mount_point: /mnt/nfs_share # Replace with your desired mount point
+  tasks:
+    - name: Update and upgrade apt packages
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: full
+      register: upgrade_result
+    - name: Upgrade results
+      ansible.builtin.debug:
+        var: upgrade_result
+    - name: Install Samba server
+      ansible.builtin.apt:
+        name:
+          - samba
+          - samba-common-bin
+        state: present
+      register: samba_install_result
+    - name: Samba install results
+      ansible.builtin.debug:
+        var: samba_install_result
+    - name: Create mount point directory
+      ansible.builtin.file:
+        path: { { mount_point } }
+        state: directory
+    - name: Append multiple lines to a config file
+      ansible.builtin.blockinfile:
+        path: /etc/samba/smb.conf
+        block: |
+          [NASShare]
+            comment = Raspberry Pi exFAT NAS
+            path = {{ mount_point }}
+            browseable = yes
+            writeable = yes
+            only guest = no
+            create mask = 0777
+            directory mask = 0777
+            public = yes
+            force user = {{ samba_user }}
+        insertafter: EOF
+        marker: "# {mark} ANSIBLE MANAGED MOUNTED NFS_SERVER SETTINGS SETTINGS"
+    - name: Set Samba password for user
+      ansible.builtin.shell: "smbpasswd -s -a {{ samba_user }}"
+      stdin: |
+        {{ samba_password }}
+        {{ samba_password }}
+      no_log: true
+    - name: Restart Samba service
+      ansible.builtin.service:
+        name: smbd
+        state: restarted
+        enabled: yes

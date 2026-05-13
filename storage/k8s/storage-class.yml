@@ -1,0 +1,6 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: samba-nas
+provisioner: kubernetes.io/no-provisioner # Tells k8s you are manually linking existing PVs
+volumeBindingMode: WaitForFirstConsumer
