@@ -26,14 +26,13 @@ I have time to write up this documentation, based on what I need to accomplish. 
 
 ## TODO List
 
-[x] Write up a how-to for setting up a NAS
-[ ] Write up a how-to for running your base operator and media layer
-[ ] Setting up Usenet server.
-[ ] Setup for each \*Arr.
-
-- [ ] sabnzbd
-- [ ] Byparr
-- [ ] Prowlarr
-- [ ] Transmission
-- [ ] Radarr
-- [ ] Sonarr
+- [x] Write up a how-to for setting up a NAS
+- [ ] Write up a how-to for running your base operator and media layer
+- [ ] Setting up Usenet server.
+- [ ] Setup for each \*Arr.
+  - [ ] sabnzbd
+  - [ ] Byparr
+  - [ ] Prowlarr
+  - [ ] Transmission
+  - [ ] Radarr
+  - [ ] Sonarr
