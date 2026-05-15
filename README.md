@@ -27,6 +27,7 @@ I have time to write up this documentation, based on what I need to accomplish. 
 ## TODO List
 
 - [x] Write up a how-to for setting up a NAS
+- [x] Run the base K8S Cluster
 - [ ] Write up a how-to for running your base operator and media layer
 - [ ] Setting up Usenet server.
 - [ ] Setup for each \*Arr.
@@ -36,3 +37,23 @@ I have time to write up this documentation, based on what I need to accomplish. 
   - [ ] Transmission
   - [ ] Radarr
   - [ ] Sonarr
+  - [ ] Seer
+
+## Diagraming
+
+```mermaid
+flowchart BT
+    Transmission --> Internet
+    Transmission<--> Sonarr
+    Transmission <--> Radarr
+    Sabnzbd <--> Sonarr
+    Sabnzbd <--> Radarr
+    Sonarr --> Prowlarr
+    Radarr --> Prowlarr
+    Prowlarr --> Byparr
+    Byparr --> Internet
+    Sabnzbd --> Usenet
+    Usenet --> Internet
+    Seer --> Sonarr
+    Seer --> Radarr
+```
