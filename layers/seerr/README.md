@@ -32,6 +32,6 @@ You need to have Radarr and Sonarr installed and configured
 
 #### First time going to site
 
-You will want to log in. The issues you need to do is find the correct IP addresses for things. The connection to Seer was related to the Pod IP. It did not like the ingress oddhand. However you may be able to get that to work
+You will want to log in. For ARR, you would should be able to use the ingress name as a hostname for IPs.
 
-When syncing to Radarr, I used the Pod IP so it got the connection set up. If the Pod crashes the IP can very well change. So this needs to be better managed, likely by referencing through ingress or hostname that k8s recognizes. I need to look more into it.
+When syncing to Radarr, I used the Ingress Hostname as the address to reference. You can use a pod, if a pod is killed and recreated, it will break, so using the ingress allows it to function regardless of the pod location or ip

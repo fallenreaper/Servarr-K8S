@@ -32,12 +32,12 @@ I have time to write up this documentation, based on what I need to accomplish. 
 - [ ] Setting up Usenet server.
 - [ ] Setup for each \*Arr.
   - [ ] sabnzbd
-  - [ ] Byparr
+  - [x] Byparr
   - [ ] Prowlarr
   - [ ] Transmission
   - [ ] Radarr
   - [ ] Sonarr
-  - [ ] Seer
+  - [x] Seer
 
 ## Diagraming
 
