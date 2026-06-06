@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: byparr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: byparr
+  template:
+    metadata:
+      labels:
+        app: byparr
+    spec:
+      # nodeSelector belongs here if you need node pinning
+      nodeSelector: {}
+      containers:
+        - name: byparr
+          image: ghcr.io/thephaseless/byparr:latest
+          ports:
+            - containerPort: 8191
+          # resources and volume mounts belong inside the container spec
+          resources: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: byparr
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8191
+      targetPort: 8191
+  selector:
+    app: byparr
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: byparr
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /byparr
+            pathType: Prefix
+            backend:
+              service:
+                name: byparr
+                port:
+                  number: 8191
+
