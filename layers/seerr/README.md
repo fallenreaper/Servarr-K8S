@@ -8,16 +8,16 @@ Another key aspect of this is that Jellyfin useraccounts can also access this to
 
 Seer seems to be primarily setup with Helm. It is essentially a package manager for Kubernetes, to ship deployments for users to consume.
 
-You will need to have an underlying [values.yml](seerr/seerr.yml) which you can edit to configure. This is pulled from the [Seer Website](https://github.com/seerr-team/seerr/blob/develop/charts/seerr-chart/README.md)
+You will need to have an underlying [values.yml](seerr.yml) which you can edit to configure. This is pulled from the [Seer Website](https://github.com/seerr-team/seerr/blob/develop/charts/seerr-chart/README.md)
 
 ```bash
-helm install seerr oci://ghcr.io/seerr-team/seerr/seerr-chart -f seerr/seerr.yml
+helm install seerr oci://ghcr.io/seerr-team/seerr/seerr-chart -f seerr.yml
 ```
 
 Upgrade, though this will also install if not previously installed:
 
 ```bash
-helm upgrade --install seerr oci://ghcr.io/seerr-team/seerr/seerr-chart -f seerr/seerr.yml -n default --atomic --timeout 5m
+helm upgrade --install seerr oci://ghcr.io/seerr-team/seerr/seerr-chart -f seerr.yml -n default --atomic --timeout 5m
 ```
 
 ## Setup
