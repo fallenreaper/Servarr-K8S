@@ -10,6 +10,9 @@ spec:
     - ReadWriteMany # Allows multiple cluster pods to read/write concurrently
   persistentVolumeReclaimPolicy: Retain
   storageClassName: samba-nas
+  # claimRef:
+  #   name: arr-configuration-pvc
+  #   namespace: default
   csi:
     driver: smb.csi.k8s.io
     volumeHandle: pi-samba-volume-id
@@ -26,4 +29,4 @@ spec:
     - noperm
     - vers=3.0
     - cache=none
-    - nobr1
+    - nobrl
