@@ -46,3 +46,36 @@ In the GENERAL spec, you will want to update the general object's storage to poi
 You can reapply this and it will establish the claim and all of the pods will start to online.
 
 `kubectl apply -f k8s-mediaserver.yml`
+
+## Updates
+
+You can use this supplied mediaserver to stand up a bunch of basics, but if you also want to do media consolidation, you would need to also make some adjustments.
+
+### Adjusting the Operator
+
+Task and Purpose:
+
+The ability to consolidate media across a bunch of different harddrives. I wanted to store the data in a location that makes sense. The purpose is to ingest the data with sonarr ( or radarr ) and then conduct a move operation which will consolidate it into the media folder. It will store it in the `/opt` location.
+
+I needed to ingest and consolidate 6 different Drives worth of data consolidated over the years. To manage this we also need make sure that the operator.
+
+#### Operator File updates
+
+In the Deployment, you will need to update the container image to have the following:
+
+```bash
+image: fallenreaper/k8s-mediaserver-operator:latest
+imagePullPolicy: Always
+```
+
+This is located in the `- args` of the containers, you will see an existing container. The purpose of this is to extend tooling to enable the ability to add an additional folder location transitioned into the tool to be digested.
+
+It is assigned as `disorganized` which you would assign to whatever folder you need to share. In the sample, i created a folder in my NAS called `disorganized-media` which will be passed into `/opt` so you can reference it in your Service Media Management and reference `/opt` to start the ingestion process.
+
+The updated operator takes into account that. If you wanted, you could do this within the media folder itself if you wanted, but I wanted to define a location that does make logical sense and not "sneaky way" of doing it.
+
+passes that information into the correlating chart and deployment for assignment.
+
+#### How is it built?
+
+Using I used the underlying k8s-mediaserver Dockerfile to build the operator container and reference it within the operator file.
