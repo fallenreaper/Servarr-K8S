@@ -1,0 +1,177 @@
+apiVersion: v1
+kind: List
+items:
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: exportarr-sonarr
+      namespace: arr-exporter
+      labels:
+        app: exportarr
+        app-name: sonarr
+    spec:
+      ports:
+        - port: 9707
+          targetPort: 9707
+          protocol: TCP
+          name: web
+      selector:
+        app: exportarr-sonarr
+      type: ClusterIP
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: exportarr-sonarr
+      namespace: arr-exporter
+      labels:
+        app: exportarr-sonarr
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: exportarr-sonarr
+      template:
+        metadata:
+          labels:
+            app: exportarr-sonarr
+        spec:
+          containers:
+            - name: exportarr
+              image: ghcr.io/onedr0p/exportarr:latest
+              args:
+                - sonarr
+              env:
+                - name: PORT
+                  value: "9707"
+                - name: URL
+                  valueFrom:
+                    configMapKeyRef:
+                      name: exportarr-config
+                      key: SONARR_URL
+                - name: API_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: exportarr-secrets
+                      key: SONARR_API_KEY
+              envFrom:
+                - configMapRef:
+                    name: exportarr-config
+              ports:
+                - containerPort: 9707
+                  name: web
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: exportarr-radarr
+      namespace: arr-exporter
+      labels:
+        app: exportarr
+        app-name: radarr
+    spec:
+      ports:
+        - port: 9708
+          targetPort: 9708
+          protocol: TCP
+          name: web
+      selector:
+        app: exportarr-radarr
+      type: ClusterIP
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: exportarr-radarr
+      namespace: arr-exporter
+      labels:
+        app: exportarr-radarr
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: exportarr-radarr
+      template:
+        metadata:
+          labels:
+            app: exportarr-radarr
+        spec:
+          containers:
+            - name: exportarr
+              image: ghcr.io/onedr0p/exportarr:latest
+              args:
+                - radarr
+              env:
+                - name: PORT
+                  value: "9708"
+                - name: URL
+                  valueFrom:
+                    configMapKeyRef:
+                      name: exportarr-config
+                      key: RADARR_URL
+                - name: API_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: exportarr-secrets
+                      key: RADARR_API_KEY
+              envFrom:
+                - configMapRef:
+                    name: exportarr-config
+              ports:
+                - containerPort: 9708
+                  name: web
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: exportarr-prowlarr
+      namespace: arr-exporter
+      labels:
+        app: exportarr
+        app-name: prowlarr
+    spec:
+      ports:
+        - port: 9709
+          targetPort: 9709
+          protocol: TCP
+          name: web
+      selector:
+        app: exportarr-prowlarr
+      type: ClusterIP
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: exportarr-prowlarr
+      namespace: arr-exporter
+      labels:
+        app: exportarr-prowlarr
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: exportarr-prowlarr
+      template:
+        metadata:
+          labels:
+            app: exportarr-prowlarr
+        spec:
+          containers:
+            - name: exportarr
+              image: ghcr.io/onedr0p/exportarr:latest
+              args:
+                - prowlarr
+              env:
+                - name: PORT
+                  value: "9709"
+                - name: URL
+                  valueFrom:
+                    configMapKeyRef:
+                      name: exportarr-config
+                      key: PROWLARR_URL
+                - name: API_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: exportarr-secrets
+                      key: PROWLARR_API_KEY
+              envFrom:
+                - configMapRef:
+                    name: exportarr-config
+              ports:
+                - containerPort: 9709
+                  name: web
